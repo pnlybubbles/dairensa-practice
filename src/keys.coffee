@@ -1,0 +1,9 @@
+module.exports =
+  updateQuestStatus: 'updateQuestStatus'
+  setAssign: 'setAssign'
+  setQuest: 'setQuest'
+  nextQuest: 'nextQuest'
+  setBoard: 'setBoard'
+  toggleMarkCell: 'toggleMarkCell'
+  failQuest: 'failQuest'
+  cleanMark: 'cleanMark'
