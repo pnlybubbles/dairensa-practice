@@ -1,0 +1,32 @@
+{
+  "name": "puyoq_dairensa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "./node_modules/.bin/gulp --require coffee-script/register build",
+    "build-dev": "./node_modules/.bin/gulp --require coffee-script/register build-dev",
+    "watch": "./node_modules/.bin/gulp --require coffee-script/register watch",
+    "watch-prd": "./node_modules/.bin/gulp --require coffee-script/register watch-prd",
+    "test": "./node_modules/.bin/gulp --require coffee-script/register test"
+  },
+  "author": "pnlybubbles",
+  "license": "MIT",
+  "devDependencies": {
+    "browserify": "^9.0.8",
+    "coffee-reactify": "^4.0.0",
+    "coffee-script": "^1.10.0",
+    "gulp": "^3.9.0",
+    "gulp-plumber": "^1.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-watchify": "^0.5.0",
+    "vinyl-buffer": "^1.0.0",
+    "watchify": "^3.4.0"
+  },
+  "dependencies": {
+    "material-flux": "^1.2.3",
+    "radium": "^0.14.1",
+    "react": "^0.14.0"
+  }
+}
