@@ -1,0 +1,10 @@
+# OSX
+.DS_Store
+
+# npm
+npm-debug.log
+node_modules/
+
+# Build
+/index.js
+/index.js.map
