@@ -31,6 +31,7 @@ class QuestStore extends Flux.Store
       failed: false
 
   failQuest: ->
+    console.log 'fail'
     @setState
       failed: true
 

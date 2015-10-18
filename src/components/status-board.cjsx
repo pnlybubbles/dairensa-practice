@@ -1,6 +1,7 @@
 React = require 'react'
 Radium = require 'radium'
 baseMixin = require './mixins/base-mixin'
+Button = require './button'
 
 module.exports = Radium React.createClass
 
@@ -16,6 +17,10 @@ module.exports = Radium React.createClass
     boardState.marked_board.forEach (row, y) =>
       row.forEach (cell, x) =>
         count += 1 if cell && @state.now_quest.delete_arr.indexOf([x, y])
+        console.log [x, y] if cell
+
+    console.log 'clicked'
+    console.log count, @state.now_quest.delete_arr.length
 
     if count == @state.now_quest.delete_arr.length
       if @state.quest_index == 9
@@ -25,42 +30,29 @@ module.exports = Radium React.createClass
     else
       @context.local.questAction.failQuest()
 
-  clickStatus: ->
-    @context.local.boardAction.cleanMark()
-
   render: ->
-    <div style={style.root} onClick={@clickStatus.bind(@)}>
-      <div style={style.labelBig}>{"#{@state.quest_index} / 10"}</div>
+    <div style={style.root}>
+      <div style={style.labelBig}>{"#{@state.quest_index + 1} / 10"}</div>
       <div style={style.labelBig}>{"#{@state.now_quest.delete_arr.length}コ消す"}</div>
       {
         if @state.failed
-          <div style={[style.labelBig, style.failed]}>Failed</div>
+          <div style={[style.labelBig, style.failed]}>しっぱい</div>
       }
-      <div style={style.button} onClick={@clickNextButton.bind(@)}>
+      <Button onClick={@clickNextButton}>
         {
           if @state.quest_index == 9
-            'End'
+            'おわる'
           else
-            'Next'
+            'つぎ'
         }
-      </div>
+      </Button>
     </div>
 
 style =
   root:
     paddingBottom: 20
     paddingTop: 20
-
-  button:
-    paddingLeft: 20
-    paddingRight: 20
-    paddingTop: 12
-    paddingBottom: 10
-    boxShadow: '0 0 3px rgba(0, 0, 0, 0.3)'
-    marginBottom: 10
-    textAlign: 'center'
-    userSelect: 'none'
-    cursor: 'pointer'
+    WebkitTapHighlightColor: 'transparent'
 
   labelBig:
     fontSize: 20

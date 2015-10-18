@@ -7,6 +7,7 @@ class BoardAction extends Flux.Action
     super
 
   initBoard: (board) ->
+    @dispatch(keys.cleanMark)
     @dispatch(keys.setBoard, board)
 
   toggleMarkCell: (x, y) ->
