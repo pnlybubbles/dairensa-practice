@@ -7,6 +7,8 @@ module.exports =
     global: React.PropTypes.any
 
   componentDidMount: ->
-    if @store?
-      @store.onChange =>
-        @setState @store.get()
+    @store?.onChange =>
+      @setState @store.get()
+
+  componentWillUnmount: ->
+    @store?.removeAllChangeListeners()
