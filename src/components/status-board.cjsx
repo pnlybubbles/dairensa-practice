@@ -1,5 +1,6 @@
 React = require 'react'
 Radium = require 'radium'
+clone = require 'lodash.clone'
 baseMixin = require './mixins/base-mixin'
 Button = require './button'
 
@@ -13,16 +14,10 @@ module.exports = Radium React.createClass
 
   clickNextButton: ->
     boardState = @context.local.boardStore.get()
-    count = 0
-    boardState.marked_board.forEach (row, y) =>
-      row.forEach (cell, x) =>
-        count += 1 if cell && @state.now_quest.delete_arr.indexOf([x, y])
-        console.log [x, y] if cell
-
-    console.log 'clicked'
-    console.log count, @state.now_quest.delete_arr.length
-
-    if count == @state.now_quest.delete_arr.length
+    ok = @state.now_quest.delete_arr
+      .map (c) -> boardState.marked_board[c[1]][c[0]]
+      .every (b) -> b
+    if ok
       if @state.quest_index == 9
         @context.local.flowAction.endQuest()
       else
@@ -32,12 +27,15 @@ module.exports = Radium React.createClass
 
   render: ->
     <div style={style.root}>
-      <div style={style.labelBig}>{"#{@state.quest_index + 1} / 10"}</div>
-      <div style={style.labelBig}>{"#{@state.now_quest.delete_arr.length}コ消す"}</div>
-      {
-        if @state.failed
-          <div style={[style.labelBig, style.failed]}>しっぱい</div>
-      }
+      <div style={style.statues}>
+        <div style={style.labelBig}>{"#{@state.now_quest.delete_arr.length}コ消す"}</div>
+        <div style={style.labelSmall}>{"#{@state.quest_index + 1} / 10"}</div>
+        <div style={style.labelSmall}>{"ぷよ数: #{@state.now_quest.count}コ"}</div>
+        {
+          if @state.failed
+            <div style={[style.labelSmall, style.failed]}>しっぱい</div>
+        }
+      </div>
       <Button onClick={@clickNextButton}>
         {
           if @state.quest_index == 9
@@ -50,13 +48,21 @@ module.exports = Radium React.createClass
 
 style =
   root:
-    paddingBottom: 20
-    paddingTop: 20
     WebkitTapHighlightColor: 'transparent'
+
+  statues:
+    paddingTop: 10
+    paddingBottom: 10
+    marginBottom: 10
 
   labelBig:
     fontSize: 20
     marginBottom: 10
+    textAlign: 'center'
+
+  labelSmall:
+    fontSize: 14
+    marginBottom: 5
     textAlign: 'center'
 
   failed:

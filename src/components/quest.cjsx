@@ -21,4 +21,6 @@ module.exports = Radium React.createClass
     </div>
 
 style =
-  root: {}
+  root:
+    paddingTop: 20
+    paddingBottom: 20
