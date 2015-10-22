@@ -18,8 +18,11 @@ class QuestAction extends Flux.Action
   failQuest: ->
     @dispatch keys.failQuest
 
-  toggleMirror: ->
-    @dispatch keys.toggleMirror
+  toggleMirror: (toggle) ->
+    @dispatch keys.toggleMirror, toggle
 
-  toggleAssign: ->
-    @dispatch keys.toggleAssign
+  toggleAssign: (toggle) ->
+    @dispatch keys.toggleAssign, toggle
+
+  toggleDeleteFilter: (toggle, toggle_filter) ->
+    @dispatch keys.toggleDeleteFilter, toggle, toggle_filter

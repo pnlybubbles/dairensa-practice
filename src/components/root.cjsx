@@ -8,5 +8,4 @@ module.exports = Radium React.createClass
   mixins: [sectionMixin]
 
   render: ->
-    console.log 'render'
     <AppComponent />

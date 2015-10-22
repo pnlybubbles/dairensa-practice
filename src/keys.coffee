@@ -9,3 +9,4 @@ module.exports =
   changeAssign: 'changeAssign'
   nextQuest: 'nextQuest'
   failQuest: 'failQuest'
+  toggleDeleteFilter: 'toggleDeleteFilter'

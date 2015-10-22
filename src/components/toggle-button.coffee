@@ -6,12 +6,6 @@ module.exports = Radium React.createClass
 
   mixins: [baseMixin]
 
-  getInitialState: ->
-    {
-      touched: false
-      toggle: @props.defaultToggle ? false
-    }
-
   touchstart: (e) ->
     e.stopPropagation()
     if (('ontouchstart' in Object.keys(window)) && e.type == 'touchstart') || (!('ontouchstart' in Object.keys(window)) && e.type == 'mousedown')
@@ -21,18 +15,16 @@ module.exports = Radium React.createClass
   touchend: (e) ->
     e.stopPropagation()
     if (('ontouchstart' in Object.keys(window)) && e.type == 'touchend') || (!('ontouchstart' in Object.keys(window)) && e.type == 'mouseup')
-      toggle = !@state.toggle
-      @props.onToggle?(e, toggle)
+      @props.onToggle?(e, !@props.toggle)
       @setState
         touched: false
-        toggle: toggle
 
   render: ->
     dstyle = {}
     if @state.touched
       dstyle =
         backgroundColor: '#eee'
-    if @state.toggle
+    if @props.toggle
       toggleStatusStyle =
         backgroundColor: '#555'
 

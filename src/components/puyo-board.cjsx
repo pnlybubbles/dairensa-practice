@@ -24,14 +24,14 @@ module.exports = Radium React.createClass
   clickCell: (x, y) ->
     @context.local.boardAction.toggleMarkCell(x, y)
 
-  touchstart: (e, x, y) ->
+  touchstart: (x, y, e) ->
     e.stopPropagation()
     if (('ontouchstart' in Object.keys(window)) && e.type == 'touchstart') || (!('ontouchstart' in Object.keys(window)) && e.type == 'mousedown')
       @setState
         touched: true
         touched_coord: [x, y]
 
-  touchend: (e, x, y) ->
+  touchend: (x, y, e) ->
     e.stopPropagation()
     if (('ontouchstart' in Object.keys(window)) && e.type == 'touchend') || (!('ontouchstart' in Object.keys(window)) && e.type == 'mouseup')
       @clickCell(x, y)
@@ -61,7 +61,7 @@ module.exports = Radium React.createClass
                     borderWidth: 4
                     borderColor: '#000'
                 row_cmp.push do =>
-                  <div key={"cell-#{x}-#{y}"} style={[style.cell, style.dp, style[@props.assign[cell]]]} onTouchStart={((e) => @touchstart(e, x, y))} onTouchEnd={((e) => @touchend(e, x, y))} onMouseDown={((e) => @touchstart(e, x, y))} onMouseUp={((e) => @touchend(e, x, y))}>
+                  <div key={"cell-#{x}-#{y}"} style={[style.cell, style.dp, style[@props.assign[cell]]]} onTouchStart={@touchstart.bind(@, x, y)} onTouchEnd={@touchend.bind(@, x, y)} onMouseDown={@touchstart.bind(@, x, y)} onMouseUp={@touchend.bind(@, x, y)}>
                     <div style={[style.mark, dstyle]}></div>
                   </div>
             board_cmp.push <div key={"row-#{y}"} style={style.row}>{row_cmp}</div>
