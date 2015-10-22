@@ -31,7 +31,7 @@ class QuestStore extends Flux.Store
         .length == 0
       deleteSlanting = v.delete_arr[1..]
         .map (c, i_) -> [c[0] - v.delete_arr[i_][0], c[1] - v.delete_arr[i_][1]]
-        .filter (v_, i_, self) -> (v_[0] != -1 || v_[0] != 1 || v_[1] != -1 || v_[1] != 1) || v_[0] != self[0][0] || v_[1] != self[0][1]
+        .filter (v_, i_, self) -> !((v_[0] == -1 || v_[0] == 1 || v_[1] == -1 || v_[1] == 1) && v_[0] == self[0][0] && v_[1] == self[0][1])
         .length == 0
       if deleteVertical || deleteHorizontal || deleteSlanting
         filter['deleteLine_straight'].push i
@@ -82,7 +82,7 @@ class QuestStore extends Flux.Store
           when 'deleteCount_1', 'deleteCount_2', 'deleteCount_3', 'deleteCount_4', 'deleteCount_5'
             filterdMapsIndex = filterdMapsIndex.concat @state.filter[v]
           when 'deleteColor_same', 'deleteColor_vary', 'deleteLine_straight', 'deleteLine_notStraight'
-            filterdMapsIndex = filterdMapsIndex.filter (idx) => @state.filter[v].indexOf(idx) == -1
+            filterdMapsIndex = filterdMapsIndex.filter (idx) => @state.filter[v].indexOf(idx) != -1
     @setState
       mapsCount: (filterdMapsIndex.length * (if @state.mirror_enabled then 2 else 1) * (if @state.assign_enabled then 120 else 1))
       filterdMaps: filterdMapsIndex.map (idx) => @state.baseMaps[idx]
