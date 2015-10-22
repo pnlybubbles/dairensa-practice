@@ -91,7 +91,7 @@ class QuestStore extends Flux.Store
   sampleQuest: ->
     quests = []
     for i in [0..9]
-      q = clone @state.filterdMaps[Math.floor(Math.random() * @state.filterdMaps.length)]
+      q = clone @state.filterdMaps[Math.floor(Math.random() * @state.filterdMaps.length)], true
       # reverse
       if @state.mirror_enabled && Math.round(Math.random()) == 0
         q.board = q.board.map (row) -> row.reverse()
