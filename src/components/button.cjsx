@@ -8,28 +8,34 @@ module.exports = Radium React.createClass
 
   getInitialState: ->
     {
-      touched: false
+      active: false
     }
 
-  touchstart: (e) ->
+  clickStart: (e) ->
     e.stopPropagation()
     if (('ontouchstart' in Object.keys(window)) && e.type == 'touchstart') || (!('ontouchstart' in Object.keys(window)) && e.type == 'mousedown')
       @setState
-        touched: true
+        active: true
 
-  touchend: (e) ->
+  clickEnd: (e) ->
     e.stopPropagation()
     if (('ontouchstart' in Object.keys(window)) && e.type == 'touchend') || (!('ontouchstart' in Object.keys(window)) && e.type == 'mouseup')
-      @props.onClick?()
-      @setState
-        touched: false
+      if @state.active
+        @props.onClick?()
+        @setState
+          active: false
+
+  clickCancel: (e) ->
+    e.stopPropagation()
+    @setState
+      active: false
 
   render: ->
     dstyle = {}
-    if @state.touched
+    if @state.active
       dstyle =
         backgroundColor: '#eee'
-    <div style={[style.root, dstyle]} ref='button' onTouchStart={@touchstart} onTouchEnd={@touchend} onMouseDown={@touchstart} onMouseUp={@touchend}>
+    <div style={[style.root, dstyle]} ref='button' onTouchStart={@clickStart} onTouchEnd={@clickEnd} onMouseDown={@clickStart} onMouseUp={@clickEnd} onTouchMove={@clickCancel} onMouseOut={@clickCancel}>
       <span style={style.label}>{@props.children}</span>
     </div>
 

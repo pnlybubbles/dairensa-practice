@@ -6,29 +6,40 @@ module.exports = Radium React.createClass
 
   mixins: [baseMixin]
 
-  touchstart: (e) ->
+  getInitialState: ->
+    {
+      active: false
+    }
+
+  clickStart: (e) ->
     e.stopPropagation()
     if (('ontouchstart' in Object.keys(window)) && e.type == 'touchstart') || (!('ontouchstart' in Object.keys(window)) && e.type == 'mousedown')
       @setState
-        touched: true
+        active: true
 
-  touchend: (e) ->
+  clickEnd: (e) ->
     e.stopPropagation()
     if (('ontouchstart' in Object.keys(window)) && e.type == 'touchend') || (!('ontouchstart' in Object.keys(window)) && e.type == 'mouseup')
-      @props.onToggle?(e, !@props.toggle)
-      @setState
-        touched: false
+      if @state.active
+        @props.onToggle?(e, !@props.toggle)
+        @setState
+          active: false
+
+  clickCancel: (e) ->
+    e.stopPropagation()
+    @setState
+      active: false
 
   render: ->
     dstyle = {}
-    if @state.touched
+    if @state.active
       dstyle =
         backgroundColor: '#eee'
     if @props.toggle
       toggleStatusStyle =
         backgroundColor: '#555'
 
-    <div style={[style.root, dstyle]} ref='button' onTouchStart={@touchstart} onTouchEnd={@touchend} onMouseDown={@touchstart} onMouseUp={@touchend}>
+    <div style={[style.root, dstyle]} ref='button' onTouchStart={@clickStart} onTouchEnd={@clickEnd} onMouseDown={@touchstart} onMouseUp={@clickEnd} onTouchMove={@clickCancel} onMouseOut={@clickCancel}>
       <span style={style.toggleStatusEdge}>
         <span style={[style.toggleStatusRect, toggleStatusStyle]}></span>
       </span>
