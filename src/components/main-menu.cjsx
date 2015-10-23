@@ -51,6 +51,12 @@ module.exports = Radium React.createClass
         <ToggleButtom toggle={@getDeleteFilterToggle('deleteCount_3')} onToggle={@toggleDeleteFilter.bind(@, 'deleteCount_3')}>3コ消し</ToggleButtom>
         <ToggleButtom toggle={@getDeleteFilterToggle('deleteCount_4')} onToggle={@toggleDeleteFilter.bind(@, 'deleteCount_4')}>4コ消し</ToggleButtom>
         <ToggleButtom toggle={@getDeleteFilterToggle('deleteCount_5')} onToggle={@toggleDeleteFilter.bind(@, 'deleteCount_5')}>5コ消し</ToggleButtom>
+        <ToggleButtom toggle={@getDeleteFilterToggle('deleteChain_5')} onToggle={@toggleDeleteFilter.bind(@, 'deleteChain_5')}>連鎖数 〜5</ToggleButtom>
+        <ToggleButtom toggle={@getDeleteFilterToggle('deleteChain_6')} onToggle={@toggleDeleteFilter.bind(@, 'deleteChain_6')}>連鎖数 6</ToggleButtom>
+        <ToggleButtom toggle={@getDeleteFilterToggle('deleteChain_7')} onToggle={@toggleDeleteFilter.bind(@, 'deleteChain_7')}>連鎖数 7</ToggleButtom>
+        <ToggleButtom toggle={@getDeleteFilterToggle('deleteChain_8')} onToggle={@toggleDeleteFilter.bind(@, 'deleteChain_8')}>連鎖数 8</ToggleButtom>
+        <ToggleButtom toggle={@getDeleteFilterToggle('deleteChain_9')} onToggle={@toggleDeleteFilter.bind(@, 'deleteChain_9')}>連鎖数 9</ToggleButtom>
+        <ToggleButtom toggle={@getDeleteFilterToggle('deleteChain_10')} onToggle={@toggleDeleteFilter.bind(@, 'deleteChain_10')}>連鎖数 10〜</ToggleButtom>
         <ToggleButtom toggle={@getDeleteFilterToggle('deleteColor_same')} onToggle={@toggleDeleteFilter.bind(@, 'deleteColor_same')}>同色消し</ToggleButtom>
         <ToggleButtom toggle={@getDeleteFilterToggle('deleteColor_vary')} onToggle={@toggleDeleteFilter.bind(@, 'deleteColor_vary')}>異色消し</ToggleButtom>
         <ToggleButtom toggle={@getDeleteFilterToggle('deleteLine_straight')} onToggle={@toggleDeleteFilter.bind(@, 'deleteLine_straight')}>直線消し</ToggleButtom>

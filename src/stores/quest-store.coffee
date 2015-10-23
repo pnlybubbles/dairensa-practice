@@ -10,6 +10,8 @@ class QuestStore extends Flux.Store
     filter = {}
     for i in [1..5]
       filter["deleteCount_#{i}"] = []
+    for i in [5..10]
+      filter["deleteChain_#{i}"] = []
     filter['deleteColor_same'] = []
     filter['deleteColor_vary'] = []
     filter['deleteLine_straight'] = []
@@ -37,6 +39,13 @@ class QuestStore extends Flux.Store
         filter['deleteLine_straight'].push i
       else
         filter['deleteLine_notStraight'].push i
+      chainCount = (v.count - v.delete_arr.length) / 4
+      if chainCount <= 5
+        filter['deleteChain_5'].push i
+      else if chainCount >= 10
+        filter['deleteChain_10'].push i
+      else
+        filter["deleteChain_#{chainCount}"].push i
     @state =
       quest_index: 0
       quests: []
@@ -48,7 +57,7 @@ class QuestStore extends Flux.Store
       mapsCount: dairensaLog.length * 2 * 120
       mirror_enabled: true
       assign_enabled: true
-      applied_filters: ['deleteCount_1', 'deleteCount_2', 'deleteCount_3', 'deleteCount_4', 'deleteCount_5']
+      applied_filters: ['deleteCount_1', 'deleteCount_2', 'deleteCount_3', 'deleteCount_4', 'deleteCount_5', 'deleteChain_5', 'deleteChain_6', 'deleteChain_7', 'deleteChain_8', 'deleteChain_9', 'deleteChain_10']
       filter: filter
     @register keys.toggleMirror, @toggleMirror
     @register keys.toggleAssign, @toggleAssign
@@ -75,14 +84,27 @@ class QuestStore extends Flux.Store
       applied_filters.push toggle_filter
     else if !toggle && toggle_filter_index != -1
       applied_filters.splice(toggle_filter_index, 1)
+    # OR filter: deleteCount
+    DeleteCountFilterdMapsIndex = []
+    [1..5]
+      .map (i) -> "deleteCount_#{i}"
+      .forEach (v) =>
+        if applied_filters.indexOf(v) != -1
+          DeleteCountFilterdMapsIndex = DeleteCountFilterdMapsIndex.concat @state.filter[v]
+    # OR filter: deleteChain
+    DeleteChainFilterdMapsIndex = []
+    [5..10]
+      .map (i) -> "deleteChain_#{i}"
+      .forEach (v) =>
+        if applied_filters.indexOf(v) != -1
+          DeleteChainFilterdMapsIndex = DeleteChainFilterdMapsIndex.concat @state.filter[v]
+    # deleteCount AND deleteChain
     filterdMapsIndex = []
-    ['deleteCount_1', 'deleteCount_2', 'deleteCount_3', 'deleteCount_4', 'deleteCount_5', 'deleteColor_same', 'deleteColor_vary', 'deleteLine_straight', 'deleteLine_notStraight'].forEach (v) =>
+    filterdMapsIndex = DeleteCountFilterdMapsIndex.filter (idx) -> DeleteChainFilterdMapsIndex.indexOf(idx) != -1
+    # AND filter
+    ['deleteColor_same', 'deleteColor_vary', 'deleteLine_straight', 'deleteLine_notStraight'].forEach (v) ->
       if applied_filters.indexOf(v) != -1
-        switch v
-          when 'deleteCount_1', 'deleteCount_2', 'deleteCount_3', 'deleteCount_4', 'deleteCount_5'
-            filterdMapsIndex = filterdMapsIndex.concat @state.filter[v]
-          when 'deleteColor_same', 'deleteColor_vary', 'deleteLine_straight', 'deleteLine_notStraight'
-            filterdMapsIndex = filterdMapsIndex.filter (idx) => @state.filter[v].indexOf(idx) != -1
+        filterdMapsIndex = filterdMapsIndex.filter (idx) => @state.filter[v].indexOf(idx) != -1
     @setState
       mapsCount: (filterdMapsIndex.length * (if @state.mirror_enabled then 2 else 1) * (if @state.assign_enabled then 120 else 1))
       filterdMaps: filterdMapsIndex.map (idx) => @state.baseMaps[idx]
