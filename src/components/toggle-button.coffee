@@ -39,7 +39,7 @@ module.exports = Radium React.createClass
       toggleStatusStyle =
         backgroundColor: '#555'
 
-    <div style={[style.root, dstyle]} ref='button' onTouchStart={@clickStart} onTouchEnd={@clickEnd} onMouseDown={@touchstart} onMouseUp={@clickEnd} onTouchMove={@clickCancel} onMouseOut={@clickCancel}>
+    <div style={[style.root, dstyle]} ref='button' onTouchStart={@clickStart} onTouchEnd={@clickEnd} onMouseDown={@clickStart} onMouseUp={@clickEnd} onTouchMove={@clickCancel} onMouseOut={@clickCancel}>
       <span style={style.toggleStatusEdge}>
         <span style={[style.toggleStatusRect, toggleStatusStyle]}></span>
       </span>
