@@ -102,7 +102,7 @@ class QuestStore extends Flux.Store
     filterdMapsIndex = []
     filterdMapsIndex = DeleteCountFilterdMapsIndex.filter (idx) -> DeleteChainFilterdMapsIndex.indexOf(idx) != -1
     # AND filter
-    ['deleteColor_same', 'deleteColor_vary', 'deleteLine_straight', 'deleteLine_notStraight'].forEach (v) ->
+    ['deleteColor_same', 'deleteColor_vary', 'deleteLine_straight', 'deleteLine_notStraight'].forEach (v) =>
       if applied_filters.indexOf(v) != -1
         filterdMapsIndex = filterdMapsIndex.filter (idx) => @state.filter[v].indexOf(idx) != -1
     @setState
