@@ -39,7 +39,7 @@ class QuestStore extends Flux.Store
         filter['deleteLine_straight'].push i
       else
         filter['deleteLine_notStraight'].push i
-      chainCount = (v.count - v.delete_arr.length) / 4
+      chainCount = v.chain
       if chainCount <= 5
         filter['deleteChain_5'].push i
       else if chainCount >= 10
